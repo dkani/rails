@@ -1366,7 +1366,7 @@ end
 
 If there are multiple nested transactions, the block is called after the outermost one has been committed and if any of the currently open transactions is rolled back, the block is never called.
 
-WARNING. If there is no currently open transaction, the block is called immediately.
+WARNING. If there are no active transactions, the `after_all_transactions_commit` callback still runs immediately after the database operation completes.
 
 [`ActiveRecord.after_all_transactions_commit`]: https://api.rubyonrails.org/classes/ActiveRecord.html#method-c-after_all_transactions_commit
 
