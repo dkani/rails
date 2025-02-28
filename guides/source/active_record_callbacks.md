@@ -1339,7 +1339,7 @@ NOTE: This applies to all `after_*_commit` variations too, such as
 
 ### Per transaction callback
 
-You can register transaction callbacks outside of a record, `ActiveRecord::Base.transaction` yields an `ActiveRecord::Transaction` object, which allows registering callbacks on it.
+You can register the transaction callbacks on the Transaction object too. `ActiveRecord::Base.transaction` yields an `ActiveRecord::Transaction` object, which allows registering callbacks on it.
 
 ```ruby
 Article.transaction do |transaction|
@@ -1364,7 +1364,11 @@ def publish_article(article)
 end
 ```
 
-[`ActiveRecord.after_all_transactions_commit`]: https://rubydoc.info/gems/activerecord/ActiveRecord.after_all_transactions_commit
+If there are multiple nested transactions, the block is called after the outermost one has been committed and if any of the currently open transactions is rolled back, the block is never called.
+
+WARNING. If there is no currently open transaction, the block is called immediately.
+
+[`ActiveRecord.after_all_transactions_commit`]: https://api.rubyonrails.org/classes/ActiveRecord.html#method-c-after_all_transactions_commit
 
 Callback Objects
 ----------------
